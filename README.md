@@ -1,0 +1,2 @@
+# azatos.github.io
+blog
