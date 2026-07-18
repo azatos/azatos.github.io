@@ -255,13 +255,27 @@ footer a { color: var(--accent); font-weight: 700; }
   .nav-scroll { max-height: calc(100dvh - 133px); }
   main, footer { width: min(100% - 28px, 640px); }
   .hero { padding: 14px 0 58px; }
-  .hero-card { display: flex; flex-direction: column; gap: 28px; padding: 28px 22px; }
-  .portrait-wrap { order: -1; align-self: flex-end; width: min(58%, 230px); margin-right: 8px; }
-  .hero h1 { font-size: clamp(3.5rem, 17vw, 5.2rem); }
+  .hero-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(122px, 38%);
+    grid-template-areas:
+      "identity portrait"
+      "intro intro"
+      "interests interests"
+      "actions actions"
+      "contact contact";
+    gap: 24px 16px;
+    padding: 28px 22px;
+  }
+  .hero-copy { display: contents; }
+  .identity-copy { grid-area: identity; align-self: center; min-width: 0; }
+  .hero-intro { grid-area: intro; }
+  .interest-block { grid-area: interests; margin-top: 0; }
+  .hero h1 { font-size: clamp(2.15rem, 9.4vw, 2.8rem); line-height: 1.02; }
   .hero-intro { font-size: 1.08rem; }
-  .profile-actions { display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; padding-top: 24px; }
+  .profile-actions { grid-area: actions; display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; padding-top: 24px; }
   .profile-button { justify-content: flex-start; min-width: 0; padding-left: .9rem; }
-  .contact-panel { width: 100%; padding: 22px; }
+  .contact-panel { grid-area: contact; width: 100%; padding: 22px; }
   .contact-grid { grid-template-columns: 1fr; gap: 16px; }
   .contact-grid > div:last-child { grid-column: auto; }
   .contact-grid > div { grid-template-columns: 1fr; gap: .1rem; padding: 12px 0; }
@@ -354,15 +368,17 @@ footer a { color: var(--accent); font-weight: 700; }
 @media (max-width: 720px) {
   .page-section { padding: 34px 0 68px; }
   .page-heading { margin-bottom: 44px; padding: 56px 0 20px; }
+  .page-heading h1 { font-size: clamp(2.55rem, 11vw, 3rem); }
   .papers-page-heading { display: block; }
   .papers-page-heading .text-link { display: inline-block; margin-top: 1.3rem; }
   .profile-actions { display: flex; padding-top: 24px; }
   .profile-button { justify-content: center; padding-left: 0; }
   .icon-action-row, .text-action-row { gap: 12px; }
   .text-button { padding: 0 12px; }
-  .portrait-column { order: -1; align-self: stretch; justify-content: flex-end; }
-  .portrait-stack { width: min(38.6667%, 153px); margin-right: 8px; }
+  .portrait-column { grid-area: portrait; align-self: start; justify-content: flex-end; }
+  .portrait-stack { width: 100%; max-width: 153px; margin-right: 0; }
   .portrait-stack .portrait-wrap { align-self: auto; width: 100%; margin: 0; }
+  .portrait-button { width: 58px; height: 32px; }
 }
 
 @media (max-width: 340px) {
