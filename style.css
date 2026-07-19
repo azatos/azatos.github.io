@@ -347,7 +347,7 @@ footer a { color: var(--accent); font-weight: 700; }
 .orcid-logo { display: grid; place-items: center; width: 29px; height: 29px; color: #fff; background: #a6ce39; border-radius: 50%; font-size: 12px; font-weight: 800; letter-spacing: -.06em; }
 .github-button svg { fill: var(--ink); stroke: none; }
 .scholar-button { color: #3478d4; border-color: #b9ccdf; }
-.scholar-button svg { fill: none; stroke: currentColor; }
+.icon-button.scholar-button svg { fill: none; stroke: currentColor; }
 .text-button { width: 142px; height: 54px; padding: 0 14px; border-radius: 4px; }
 .text-button:hover { color: #fff; background: var(--ink); border-color: var(--ink); }
 .text-button svg { width: 18px; height: 18px; }
