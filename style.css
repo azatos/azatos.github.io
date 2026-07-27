@@ -46,8 +46,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #58c6b7; outline-offs
 .sidebar {
   position: fixed;
   z-index: 200;
-  top: 16px;
-  left: max(18px, calc(50% - 590px));
+  top: var(--sidebar-top, 54px);
+  right: auto;
+  left: var(--sidebar-left, calc(50% + 484px));
   width: 54px;
   max-height: 54px;
   overflow: hidden;
@@ -62,9 +63,17 @@ a:focus-visible, button:focus-visible { outline: 3px solid #58c6b7; outline-offs
 
 .sidebar:hover, .sidebar:focus-within, .sidebar.is-open {
   width: var(--sidebar-width);
-  max-height: calc(100dvh - 32px);
+  max-height: calc(100dvh - var(--sidebar-top, 54px) - 16px);
   opacity: .96;
   box-shadow: 0 22px 58px rgba(9,15,18,.28);
+}
+
+.sidebar.is-dragging {
+  width: var(--sidebar-width);
+  max-height: calc(100dvh - var(--sidebar-top, 54px) - 16px);
+  opacity: .96;
+  user-select: none;
+  transition: none;
 }
 
 .menu-toggle {
@@ -72,13 +81,15 @@ a:focus-visible, button:focus-visible { outline: 3px solid #58c6b7; outline-offs
   display: block;
   width: 54px;
   height: 54px;
-  margin-left: auto;
+  margin-left: 0;
   padding: 0;
   border: 0;
   color: inherit;
   background: transparent;
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;
 }
+.sidebar.is-dragging .menu-toggle { cursor: grabbing; }
 .menu-toggle:focus-visible { outline: 2px solid #58c6b7; outline-offset: -5px; border-radius: 9px; }
 
 .menu-toggle span {
@@ -94,9 +105,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #58c6b7; outline-offs
 .menu-toggle span:nth-child(1) { top: 19px; }
 .menu-toggle span:nth-child(2) { top: 26px; }
 .menu-toggle span:nth-child(3) { top: 33px; }
-.sidebar:hover .menu-toggle span:nth-child(1), .sidebar:focus-within .menu-toggle span:nth-child(1), .sidebar.is-open .menu-toggle span:nth-child(1) { top: 26px; transform: rotate(45deg); }
-.sidebar:hover .menu-toggle span:nth-child(2), .sidebar:focus-within .menu-toggle span:nth-child(2), .sidebar.is-open .menu-toggle span:nth-child(2) { opacity: 0; }
-.sidebar:hover .menu-toggle span:nth-child(3), .sidebar:focus-within .menu-toggle span:nth-child(3), .sidebar.is-open .menu-toggle span:nth-child(3) { top: 26px; transform: rotate(-45deg); }
+.sidebar:hover .menu-toggle span:nth-child(1), .sidebar:focus-within .menu-toggle span:nth-child(1), .sidebar.is-open .menu-toggle span:nth-child(1), .sidebar.is-dragging .menu-toggle span:nth-child(1) { top: 26px; transform: rotate(45deg); }
+.sidebar:hover .menu-toggle span:nth-child(2), .sidebar:focus-within .menu-toggle span:nth-child(2), .sidebar.is-open .menu-toggle span:nth-child(2), .sidebar.is-dragging .menu-toggle span:nth-child(2) { opacity: 0; }
+.sidebar:hover .menu-toggle span:nth-child(3), .sidebar:focus-within .menu-toggle span:nth-child(3), .sidebar.is-open .menu-toggle span:nth-child(3), .sidebar.is-dragging .menu-toggle span:nth-child(3) { top: 26px; transform: rotate(-45deg); }
 
 .sidebar-content {
   width: var(--sidebar-width);
@@ -105,12 +116,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid #58c6b7; outline-offs
   transform: translateY(-5px);
   transition: opacity .22s .08s, transform .25s .08s, visibility 0s .32s;
 }
-.sidebar:hover .sidebar-content, .sidebar:focus-within .sidebar-content, .sidebar.is-open .sidebar-content { visibility: visible; opacity: 1; transform: none; transition-delay: .08s; }
+.sidebar:hover .sidebar-content, .sidebar:focus-within .sidebar-content, .sidebar.is-open .sidebar-content, .sidebar.is-dragging .sidebar-content { visibility: visible; opacity: 1; transform: none; transition-delay: .08s; }
 .sidebar-brand { display: flex; align-items: center; gap: .75rem; margin: 0 15px .7rem; padding: .8rem 0 1rem; border-bottom: 1px solid rgba(255,255,255,.15); }
 .brand-mark { display: grid; place-items: center; flex: 0 0 38px; height: 38px; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; font-family: var(--serif); font-size: .86rem; }
 .sidebar-brand strong { display: block; font-family: var(--serif); font-size: 1.05rem; letter-spacing: .01em; }
 .sidebar-brand small { display: block; margin-top: -.1rem; color: #9da5aa; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; }
-.nav-scroll { max-height: calc(100dvh - 137px); overflow-y: auto; overscroll-behavior: contain; padding: 0 9px 14px; scrollbar-width: thin; scrollbar-color: #62686b transparent; }
+.nav-scroll { max-height: calc(100dvh - var(--sidebar-top, 54px) - 149px); overflow-y: auto; overscroll-behavior: contain; padding: 0 9px 14px; scrollbar-width: thin; scrollbar-color: #62686b transparent; }
 .nav-scroll::-webkit-scrollbar { width: 5px; }
 .nav-scroll::-webkit-scrollbar-thumb { background: #62686b; border-radius: 10px; }
 .nav-group + .nav-group { margin-top: .3rem; }
@@ -123,6 +134,11 @@ a:focus-visible, button:focus-visible { outline: 3px solid #58c6b7; outline-offs
 .nav-secondary a { display: block; padding: .3rem .35rem; color: #aeb5b9; border-radius: 5px; font-size: .76rem; line-height: 1.4; }
 .nav-secondary a:hover, .nav-secondary a.active { color: #fff; background: #1c2022; }
 .menu-backdrop { display: none; }
+
+/* When the full menu cannot fit beside the profile, keep it inside the profile's top-left corner. */
+@media (min-width: 721px) and (max-width: 1491px) {
+  .sidebar:not(.has-custom-position) { left: max(40px, calc(50% - 454px)); }
+}
 
 main { width: min(940px, calc(100% - 48px)); margin: 0 auto; }
 .hero { padding: 38px 0 74px; }
@@ -227,7 +243,6 @@ footer p { margin: 0; }
 footer a { color: var(--accent); font-weight: 700; }
 
 @media (max-width: 980px) {
-  .sidebar { left: 14px; }
   .hero-card { grid-template-columns: minmax(0, 1fr) 240px; gap: 32px; padding: 42px; }
   .profile-actions { grid-template-columns: repeat(3, 1fr); }
   .contact-grid { grid-template-columns: 1fr; }
@@ -238,20 +253,20 @@ footer a { color: var(--accent); font-weight: 700; }
   body.menu-open { overflow: hidden; }
   .menu-backdrop { position: fixed; inset: 0; z-index: 150; display: block; pointer-events: none; opacity: 0; background: rgba(10,15,18,.46); backdrop-filter: blur(2px); transition: opacity .25s; }
   body.menu-open .menu-backdrop { pointer-events: auto; opacity: 1; }
-  .sidebar { top: 12px; left: 12px; width: 50px; max-height: 50px; border-radius: 12px; opacity: .72; }
-  .sidebar:hover:not(.is-open) { width: 50px; max-height: 50px; }
-  .sidebar.is-open, .sidebar:focus-within { width: min(var(--sidebar-width), calc(100vw - 24px)); max-height: calc(100dvh - 24px); opacity: .98; }
-  .menu-toggle { width: 50px; height: 50px; }
+  .sidebar, .sidebar.has-custom-position { top: 28px; right: auto; left: 28px; width: 50px; max-height: 50px; border-radius: 12px; opacity: .72; }
+  .sidebar:hover:not(.is-open), .sidebar:focus-within:not(.is-open) { width: 50px; max-height: 50px; opacity: .72; }
+  .sidebar.is-open { width: min(var(--sidebar-width), calc(100vw - 40px)); max-height: calc(100dvh - 40px); opacity: .98; }
+  .menu-toggle { width: 50px; height: 50px; margin-left: 0; cursor: pointer; touch-action: manipulation; }
   .menu-toggle span { left: 14px; }
   .menu-toggle span:nth-child(1) { top: 17px; }
   .menu-toggle span:nth-child(2) { top: 24px; }
   .menu-toggle span:nth-child(3) { top: 31px; }
   .sidebar.is-open .menu-toggle span:nth-child(1) { top: 24px; }
   .sidebar.is-open .menu-toggle span:nth-child(3) { top: 24px; }
-  .sidebar:hover:not(.is-open) .menu-toggle span:nth-child(1) { top: 17px; transform: none; }
-  .sidebar:hover:not(.is-open) .menu-toggle span:nth-child(2) { opacity: 1; }
-  .sidebar:hover:not(.is-open) .menu-toggle span:nth-child(3) { top: 31px; transform: none; }
-  .sidebar:hover:not(.is-open) .sidebar-content { visibility: hidden; opacity: 0; }
+  .sidebar:hover:not(.is-open) .menu-toggle span:nth-child(1), .sidebar:focus-within:not(.is-open) .menu-toggle span:nth-child(1) { top: 17px; transform: none; }
+  .sidebar:hover:not(.is-open) .menu-toggle span:nth-child(2), .sidebar:focus-within:not(.is-open) .menu-toggle span:nth-child(2) { opacity: 1; }
+  .sidebar:hover:not(.is-open) .menu-toggle span:nth-child(3), .sidebar:focus-within:not(.is-open) .menu-toggle span:nth-child(3) { top: 31px; transform: none; }
+  .sidebar:hover:not(.is-open) .sidebar-content, .sidebar:focus-within:not(.is-open) .sidebar-content { visibility: hidden; opacity: 0; }
   .nav-scroll { max-height: calc(100dvh - 133px); }
   main, footer { width: min(100% - 28px, 640px); }
   .hero { padding: 14px 0 58px; }
