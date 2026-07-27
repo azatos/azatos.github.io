@@ -32,8 +32,9 @@ sidebarContent.innerHTML = `
       </div>
     </div>
     <div class="nav-group">
-      <a class="nav-primary" href="etc.html" data-page="etc" data-menu-link>Talks &amp; Awards</a>
+      <a class="nav-primary" href="etc.html" data-page="etc" data-menu-link>Others</a>
       <div class="nav-secondary">
+        <a href="etc.html#seminar" data-page="etc" data-section="seminar" data-menu-link>Seminar</a>
         <a href="etc.html#talks" data-page="etc" data-section="talks" data-menu-link>Talks</a>
         <a href="etc.html#awards" data-page="etc" data-section="awards" data-menu-link>Awards</a>
       </div>
@@ -62,7 +63,7 @@ function getAdaptiveSidebarPosition() {
   const outsideLeft = profileBounds.right + 14;
   return {
     hasExternalSpace: window.innerWidth - outsideLeft >= 254 + sidebarMargin,
-    inside: { left: profileBounds.left + 16, top: 54 },
+    inside: { left: profileBounds.left, top: 54 },
   };
 }
 
