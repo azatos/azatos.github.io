@@ -373,11 +373,11 @@ footer a { color: var(--accent); font-weight: 700; }
 .icon-action-row { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 8px; }
 .text-action-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: clamp(10px, 3vw, 28px); width: 100%; }
 .profile-button { min-height: 0; padding: 0; flex: 0 0 auto; }
-.icon-button { width: 37.8px; height: 37.8px; border-radius: 50%; background: #fff; }
+.icon-button { width: 44.6px; height: 44.6px; border-radius: 50%; background: #fff; }
 .icon-button:hover { color: var(--ink); background: #eef1ef; border-color: #aeb8b5; transform: translateY(-2px); }
-.icon-button svg { width: 18.9px; height: 18.9px; }
-.linkedin-logo { display: block; width: 20.3px; height: 20.3px; object-fit: contain; }
-.orcid-logo { display: grid; place-items: center; width: 20.3px; height: 20.3px; color: #fff; background: #a6ce39; border-radius: 50%; font-size: 8.4px; font-weight: 800; letter-spacing: -.06em; }
+.icon-button svg { width: 22.3px; height: 22.3px; }
+.linkedin-logo { display: block; width: 24px; height: 24px; object-fit: contain; }
+.orcid-logo { display: grid; place-items: center; width: 24px; height: 24px; color: #fff; background: #a6ce39; border-radius: 50%; font-size: 9.9px; font-weight: 800; letter-spacing: -.06em; }
 .github-button svg { fill: var(--ink); stroke: none; }
 .scholar-button { color: #3478d4; border-color: #b9ccdf; }
 .icon-button.scholar-button svg { fill: none; stroke: currentColor; }
