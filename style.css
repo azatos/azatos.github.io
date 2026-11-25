@@ -23,6 +23,9 @@
   --accent-pale: #dceee9;
   --sidebar: #07090a;
   --sidebar-width: 254px;
+  --date-column: 6.25rem;
+  --date-gap: 1.25rem;
+  --timeline-padding: 19px 0 21px;
 }
 
 * { box-sizing: border-box; }
@@ -211,16 +214,21 @@ main { width: min(940px, calc(100% - 48px)); margin: 0 auto; }
 .subsection-title h3 { margin: -.05rem 0 0; font-size: 1.75rem; font-weight: 500; }
 .subsection-title p { font-size: .58rem; }
 .timeline { border-top: 1px solid var(--ink); }
-.timeline-item { display: grid; grid-template-columns: 200px 1fr; gap: 34px; padding: 26px 0 28px; border-bottom: 1px solid var(--line); }
-.timeline-date { padding-top: .16rem; color: var(--accent); font-size: .72rem; font-weight: 750; letter-spacing: .03em; }
+.timeline-item, .seminar-entry summary, .publication-card, .publication-empty {
+  display: grid;
+  grid-template-columns: var(--date-column) minmax(0, 1fr);
+  column-gap: var(--date-gap);
+}
+.timeline-item, .seminar-entry summary { padding: var(--timeline-padding); }
+.timeline-item { border-bottom: 1px solid var(--line); }
+.timeline-date, .pub-year { padding-top: .16rem; color: var(--accent); font-size: .72rem; font-weight: 750; letter-spacing: .03em; }
 .timeline-item h4 { margin: 0 0 .3rem; font-size: 1.15rem; font-weight: 600; line-height: 1.35; }
 .timeline-item p { margin: 0; color: var(--ink-soft); font-size: .86rem; }
 .timeline-item .detail { margin-top: .4rem; color: var(--muted); font-size: .76rem; }
-.compact-timeline .timeline-item { padding: 19px 0 21px; }
 
 .seminar-list { border-top: 1px solid var(--ink); }
 .seminar-entry { border-bottom: 1px solid var(--line); }
-.seminar-entry summary { display: grid; grid-template-columns: 200px 1fr; gap: 34px; padding: 26px 0 28px; cursor: pointer; list-style: none; }
+.seminar-entry summary { cursor: pointer; list-style: none; }
 .seminar-entry summary::-webkit-details-marker { display: none; }
 .seminar-entry summary:focus-visible { outline: 3px solid #58c6b7; outline-offset: 4px; border-radius: 2px; }
 .seminar-summary-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
@@ -230,13 +238,13 @@ main { width: min(940px, calc(100% - 48px)); margin: 0 auto; }
 .seminar-toggle::before, .seminar-toggle::after { content: ""; position: absolute; top: 13px; left: 8px; width: 10px; height: 1px; background: var(--accent); transition: transform .2s; }
 .seminar-toggle::after { transform: rotate(90deg); }
 .seminar-entry[open] .seminar-toggle::after { transform: rotate(0); }
-.seminar-details { margin-left: 234px; padding: 0 0 30px; }
+.seminar-details { margin-inline-start: calc(var(--date-column) + var(--date-gap)); padding-bottom: 21px; }
 .seminar-details > p:first-child { max-width: 680px; margin: 0 0 1.4rem; color: var(--ink-soft); font-size: .86rem; }
 .seminar-meta { display: grid; grid-template-columns: 105px 1fr; gap: 18px; margin-bottom: 1.35rem; }
 .seminar-meta p { margin: 0; color: var(--ink-soft); font-size: .82rem; }
 .seminar-label { display: block; color: var(--muted); font-size: .63rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
 .seminar-schedule { margin: .6rem 0 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
-.seminar-schedule li { display: grid; grid-template-columns: 102px minmax(0, 1fr) 112px; gap: 16px; padding: 10px 0; color: var(--ink-soft); border-bottom: 1px solid var(--line); font-size: .76rem; line-height: 1.45; }
+.seminar-schedule li { display: grid; grid-template-columns: var(--date-column) minmax(0, 1fr) 112px; column-gap: var(--date-gap); padding: var(--timeline-padding); color: var(--ink-soft); border-bottom: 1px solid var(--line); font-size: .76rem; line-height: 1.45; }
 .seminar-schedule time { color: var(--accent); font-weight: 700; }
 .seminar-schedule strong { color: var(--ink); font-weight: 800; }
 .seminar-schedule .schedule-tba { display: block; color: var(--muted); font-style: italic; }
@@ -257,16 +265,15 @@ main { width: min(940px, calc(100% - 48px)); margin: 0 auto; }
 .publication-group-title > div > span { color: var(--accent); font-size: .75rem; font-style: italic; }
 .publication-group-title h3 { margin: 0; font-size: clamp(1.4rem, 3vw, 1.85rem); font-weight: 500; }
 .count { color: var(--muted); font-size: .66rem; letter-spacing: .09em; text-transform: uppercase; }
-.publication-card, .publication-empty { display: grid; grid-template-columns: 200px 1fr; gap: 34px; padding: 26px 0 28px; border-bottom: 1px solid var(--line); }
+.publication-card, .publication-empty { padding: 26px 0 28px; border-bottom: 1px solid var(--line); }
 .publication-group-title + .publication-card, .publication-group-title + .publication-empty { border-top: 1px solid var(--ink); }
-.pub-year { padding-top: .16rem; color: var(--accent); font-size: .72rem; font-weight: 750; letter-spacing: .03em; }
 .pub-type { margin-bottom: .42rem; font-size: .58rem; }
 .pub-body h4 { max-width: 730px; margin: 0 0 .65rem; font-size: clamp(1.16rem, 2.5vw, 1.42rem); font-weight: 600; line-height: 1.35; }
 .authors { margin: 0 0 .35rem; font-size: .86rem; }
 .authors span { color: #8a9399; }
 .authors strong { color: var(--ink); font-weight: 800; }
 .venue { margin: 0; color: var(--ink-soft); font-size: .86rem; font-style: italic; }
-.pub-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 1rem; }
+.pub-links { display: inline-flex; align-items: baseline; gap: .6rem; margin-inline-start: .25rem; font-style: normal; white-space: nowrap; }
 .pub-links a { color: var(--accent); border-bottom: 1px solid rgba(10,113,104,.35); font-size: .68rem; font-weight: 800; letter-spacing: .04em; }
 .publication-empty p { margin: 0; color: var(--ink-soft); font-size: .86rem; }
 .source-note { margin: 1rem 0 0; color: var(--muted); font-size: .68rem; text-align: right; }
@@ -287,6 +294,7 @@ footer a { color: var(--accent); font-weight: 700; }
 }
 
 @media (max-width: 720px) {
+  :root { --date-gap: .75rem; }
   body.menu-open { overflow: hidden; }
   .menu-backdrop { position: fixed; inset: 0; z-index: 150; display: block; pointer-events: none; opacity: 0; background: rgba(10,15,18,.46); backdrop-filter: blur(2px); transition: opacity .25s; }
   body.menu-open .menu-backdrop { pointer-events: auto; opacity: 1; }
@@ -334,12 +342,12 @@ footer a { color: var(--accent); font-weight: 700; }
   .papers-heading { display: block; }
   .papers-heading .text-link { display: inline-block; margin-top: 1.5rem; }
   .subsection + .subsection { margin-top: 66px; }
-  .timeline-item { grid-template-columns: 1fr; gap: 7px; padding: 22px 0 24px; }
-  .seminar-entry summary { grid-template-columns: 1fr; gap: 7px; padding: 22px 0 24px; }
-  .seminar-details { margin-left: 0; padding-bottom: 26px; }
+  .seminar-details { margin-inline-start: 0; }
+  .seminar-summary-main { gap: .5rem; }
+  .seminar-title { hyphens: auto; overflow-wrap: anywhere; }
   .seminar-meta { grid-template-columns: 1fr; gap: 4px; }
-  .seminar-schedule li { grid-template-columns: 1fr; gap: 2px; padding: 11px 0; }
-  .seminar-schedule li > :last-child { color: var(--muted); }
+  .seminar-schedule li { grid-template-columns: var(--date-column) minmax(0, 1fr); row-gap: 2px; }
+  .seminar-schedule li > :last-child { grid-column: 2; color: var(--muted); }
   .seminar-schedule li > strong:last-child { color: var(--ink); }
   .teaching-grid { grid-template-columns: 1fr; }
   .teaching-card { min-height: 0; }
@@ -347,7 +355,7 @@ footer a { color: var(--accent); font-weight: 700; }
   .publication-group-title { align-items: end; }
   .publication-group-title > div { display: block; }
   .publication-group-title h3 { margin-top: .15rem; }
-  .publication-card, .publication-empty { grid-template-columns: 1fr; gap: 7px; padding: 22px 0 24px; }
+  .publication-card, .publication-empty { padding: 22px 0 24px; }
   .etc-grid { grid-template-columns: 1fr; }
   .empty-card { min-height: 180px; }
 }
