@@ -166,7 +166,6 @@ main { width: min(940px, calc(100% - 48px)); margin: 0 auto; }
 .portrait-wrap img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 27%; filter: saturate(.78) contrast(1.02); }
 .portrait-accent { position: absolute; z-index: 0; right: -12px; bottom: -12px; width: 68%; height: 76%; background: var(--accent-pale); }
 
-.profile-actions { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding-top: 30px; border-top: 1px solid var(--line); }
 .profile-button { display: flex; align-items: center; justify-content: center; gap: .52rem; min-height: 52px; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: 4px; color: var(--ink-soft); background: #fff; font-size: .76rem; font-weight: 750; line-height: 1.15; transition: color .2s, background .2s, border-color .2s, transform .2s; }
 .profile-button:hover { color: #fff; background: var(--ink); border-color: var(--ink); transform: translateY(-2px); }
 .profile-button svg { width: 17px; height: 17px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
@@ -270,7 +269,6 @@ footer a { color: var(--accent); font-weight: 700; }
 
 @media (max-width: 980px) {
   .hero-card { grid-template-columns: minmax(0, 1fr) 240px; gap: 32px; padding: 42px 0; }
-  .profile-actions { grid-template-columns: repeat(3, 1fr); }
   .contact-grid { grid-template-columns: 1fr; }
   .contact-grid > div:last-child { grid-column: auto; }
 }
@@ -298,12 +296,11 @@ footer a { color: var(--accent); font-weight: 700; }
   .hero { padding: 14px 0 58px; }
   .hero-card {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(122px, 38%);
+    grid-template-columns: minmax(0, 1fr) minmax(164px, 38%);
     grid-template-areas:
       "identity portrait"
       "intro intro"
       "interests interests"
-      "actions actions"
       "contact contact";
     gap: 24px 16px;
     padding: 28px 0;
@@ -314,7 +311,6 @@ footer a { color: var(--accent); font-weight: 700; }
   .interest-block { grid-area: interests; margin-top: 0; }
   .hero h1 { font-size: clamp(2.15rem, 9.4vw, 2.8rem); line-height: 1.02; }
   .hero-intro { font-size: 1.08rem; }
-  .profile-actions { grid-area: actions; display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; padding-top: 24px; }
   .profile-button { justify-content: flex-start; min-width: 0; padding-left: .9rem; }
   .contact-panel { grid-area: contact; width: 100%; padding: 22px; }
   .contact-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -344,7 +340,6 @@ footer a { color: var(--accent); font-weight: 700; }
 }
 
 @media (max-width: 340px) {
-  .profile-actions { grid-template-columns: 1fr; }
   .publication-group-title .count { display: none; }
   .hero-card { padding-inline: 0; }
 }
@@ -375,23 +370,14 @@ footer a { color: var(--accent); font-weight: 700; }
 .cv-updated { margin: .42rem 0 0; color: var(--muted); font-size: .6rem; line-height: 1.2; white-space: nowrap; }
 
 /* Fixed-size buttons. Only the spacing between them adapts. */
-.profile-actions {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  padding-top: 30px;
-  border-top: 1px solid var(--line);
-}
-.icon-action-row, .text-action-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: clamp(10px, 3vw, 28px); width: 100%; }
+.icon-action-row { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 8px; }
+.text-action-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: clamp(10px, 3vw, 28px); width: 100%; }
 .profile-button { min-height: 0; padding: 0; flex: 0 0 auto; }
-.icon-button { width: 54px; height: 54px; border-radius: 50%; background: #fff; }
+.icon-button { width: 37.8px; height: 37.8px; border-radius: 50%; background: #fff; }
 .icon-button:hover { color: var(--ink); background: #eef1ef; border-color: #aeb8b5; transform: translateY(-2px); }
-.icon-button svg { width: 27px; height: 27px; }
-.linkedin-logo { display: block; width: 29px; height: 29px; object-fit: contain; }
-.orcid-logo { display: grid; place-items: center; width: 29px; height: 29px; color: #fff; background: #a6ce39; border-radius: 50%; font-size: 12px; font-weight: 800; letter-spacing: -.06em; }
+.icon-button svg { width: 18.9px; height: 18.9px; }
+.linkedin-logo { display: block; width: 20.3px; height: 20.3px; object-fit: contain; }
+.orcid-logo { display: grid; place-items: center; width: 20.3px; height: 20.3px; color: #fff; background: #a6ce39; border-radius: 50%; font-size: 8.4px; font-weight: 800; letter-spacing: -.06em; }
 .github-button svg { fill: var(--ink); stroke: none; }
 .scholar-button { color: #3478d4; border-color: #b9ccdf; }
 .icon-button.scholar-button svg { fill: none; stroke: currentColor; }
@@ -418,9 +404,8 @@ footer a { color: var(--accent); font-weight: 700; }
   .page-heading h1 { font-size: clamp(2.55rem, 11vw, 3rem); }
   .papers-page-heading { display: block; }
   .papers-page-heading .text-link { display: inline-block; margin-top: 1.3rem; }
-  .profile-actions { display: flex; padding-top: 24px; }
   .profile-button { justify-content: center; padding-left: 0; }
-  .icon-action-row, .text-action-row { gap: 12px; }
+  .text-action-row { gap: 12px; }
   .text-button { padding: 0 12px; }
   .portrait-column { grid-area: portrait; align-self: start; justify-content: flex-end; }
   .portrait-stack { width: 100%; max-width: 153px; margin-right: 12px; }
@@ -429,8 +414,6 @@ footer a { color: var(--accent); font-weight: 700; }
 }
 
 @media (max-width: 340px) {
-  .profile-actions { display: flex; }
-  .icon-action-row { gap: 8px; }
   .text-action-row { gap: 8px; }
   .text-button { width: 132px; }
 }
